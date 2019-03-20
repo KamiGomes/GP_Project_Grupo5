@@ -2,7 +2,9 @@
 
 // Import contact model
 Contact = require('../models/contactModel');
-
+// Get Parent Path
+var path = require("path");
+var parentPath = path.resolve(__dirname,'..');
 // Handle index actions
 exports.index = function (req, res) {
     Contact.get(function (err, contacts) {
@@ -12,14 +14,31 @@ exports.index = function (req, res) {
                 message: err,
             });
         }
-        res.json({
-            status: "success",
-            message: "Contacts retrieved successfully",
-            data: contacts
+        //res.json({data: contacts});
+        res.render('listall', {
+              title: 'Teste',
+              welcomeMessage: 'Exemplo de Listagem com tabela',
+              columns: Object.keys(Contact.schema.paths).map(key => {
+                      return {
+                          name: key
+                      }
+              }),
+              rows: contacts.map(obj => {
+                return {
+                  properties: Object.keys(Contact.schema.paths).map(key => {
+                    return{
+                        value: obj[key]
+                    }
+                  })
+                }
+              })
         });
     });
 };
-
+/*
+exports.index = function (req, res){
+    res.sendFile(path.resolve(parentPath + "/views/contacts/index.html"))
+};*/
 // Handle create contact actions
 exports.new = function (req, res) {
     var contact = new Contact();
