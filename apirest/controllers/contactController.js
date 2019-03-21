@@ -1,5 +1,4 @@
 // contactController.js
-
 // Import contact model
 Contact = require('../models/contactModel');
 // Get Parent Path
@@ -35,13 +34,43 @@ exports.index = function (req, res) {
         });
     });
 };
-/*
-exports.index = function (req, res){
-    res.sendFile(path.resolve(parentPath + "/views/contacts/index.html"))
-};*/
+exports.create = function (req, res) {
+    Contact.get(function (err, contacts) {
+        if (err){
+          res.json({
+              status: "error",
+              message: err,
+          });
+        }
+        //
+        res.render('form', {
+            title: "Contact",
+            formTitle: "Contact",
+            formAction: "New",
+            formMethod: "POST",
+            properties: function () {
+              var properties = [];
+              Object.keys(Contact.schema.paths).map(key => {
+                if(key != "create_date" && key != "_id" && key != "__v" ){
+                  var type = "text";
+                  if(key == "phone")
+                    type = typeof Contact.schema.tree.phone.default;
+                  properties.push({type: type, name: key, nameLower: key, isDropDown: false});
+                }
+              })
+              return properties;
+            }
+        });
+    });
+}
+
 // Handle create contact actions
 exports.new = function (req, res) {
     var contact = new Contact();
+    console.log(req.body.name);
+    console.log(req.body.gender);
+    console.log(req.body.email);
+    console.log(req.body.phone);
     contact.name = req.body.name ? req.body.name : contact.name;
     contact.gender = req.body.gender;
     contact.email = req.body.email;

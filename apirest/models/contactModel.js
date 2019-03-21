@@ -6,14 +6,20 @@ var mongoose = require('mongoose');
 var contactSchema = mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        default: ""
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        default: ""
     },
     gender: String,
-    phone: String,
+    phone: {
+        type: Number,
+        required: false,
+        default: 0
+    },
     create_date: {
         type: Date,
         default: Date.now

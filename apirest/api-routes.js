@@ -13,8 +13,12 @@ router.get('/', function (req, res) {
 });
 // Contact routes
 router.route('/contacts')
-    .get(contactController.index)
-    .post(contactController.new);
+    .get(contactController.index);
+
+//Route to call the Form to create a new Contact
+router.route('/contacts/insert')
+  .get(contactController.create)
+  .post(contactController.new);
 
 router.route('/contacts/:contact_id')
     .get(contactController.view)

@@ -33,7 +33,7 @@ var port = process.env.PORT || 8080;
 app.get('/', (req, res) => res.send('Hello World with Express'));
 
 // Use Api routes in the App
-app.use('/api', apiRoutes)
+app.use('/administration', apiRoutes);
 
 // Launch app to listen to specified port
 app.listen(port, function () {
