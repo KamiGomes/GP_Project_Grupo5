@@ -8,6 +8,7 @@
     </header>
     <body>
         <h1>{{welcomeMessage}}</h1>
+				<h2><a href="./contacts/insert">Inserir</a></h2>
         <table>
             <tr>
                 {{#columns}}
@@ -21,6 +22,11 @@
                       {{value}}
                   </td>
                   {{/properties}}
+									{{#actions}}
+									<td>
+										<a href="{{link}}">{{label}}</a>
+									</td>
+									{{/actions}}
               </tr>
             {{/rows}}
         </table>

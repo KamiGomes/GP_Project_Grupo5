@@ -1,0 +1,42 @@
+<html>
+    <head>
+      <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+      <title>{{title}}</title>
+      {{#delete}}
+      <script type="text/javascript">
+        function deleteObj() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("DELETE", "../{{deletelink}}", true);
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(this.responseText)
+                    if(response.status){
+                        alert(response.message);
+                        window.location.replace("../");
+                    }
+                }
+            }
+            xhr.send();
+        }
+      </script>
+    {{/delete}}
+    </head>
+    <header>
+      {{#delete}}
+          <h1>Têm a certeza que quer eliminar?</h1>
+          <h2>Antes de eliminar, confirme se quer perder toda a informação abaixo disposta?</h2>
+      {{/delete}}
+    </header>
+    <body>
+        {{#properties}}
+        <div>
+            <label>{{name}}:</label>
+            <label>{{value}}</label>
+        </div>
+        {{/properties}}
+        {{#delete}}
+              <a href="../">Voltar</a>
+              <button type="button" onclick="deleteObj()">Eliminar</button>
+        {{/delete}}
+    </body>
+</html>

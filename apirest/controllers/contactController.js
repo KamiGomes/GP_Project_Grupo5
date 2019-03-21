@@ -15,7 +15,7 @@ exports.index = function (req, res) {
         }
         //res.json({data: contacts});
         res.render('listall', {
-              title: 'Teste',
+              title: 'Contactos',
               welcomeMessage: 'Exemplo de Listagem com tabela',
               columns: Object.keys(Contact.schema.paths).map(key => {
                       return {
@@ -28,8 +28,18 @@ exports.index = function (req, res) {
                     return{
                         value: obj[key]
                     }
-                  })
-                }
+                  }),
+                  actions: [{
+                    label: "Detalhes",
+                    link: "./contacts/"+obj._id
+                    },{
+                    label: "Editar",
+                    link: "./"
+                    },{
+                    label: "Eliminar",
+                    link: "./contacts/delete/"+obj._id
+                    }
+                  ]}
               })
         });
     });
@@ -81,7 +91,7 @@ exports.new = function (req, res) {
         // if (err)
         //     res.json(err);
 
-res.json({
+        res.json({
             message: 'New contact created!',
             data: contact
         });
@@ -89,13 +99,19 @@ res.json({
 };
 
 // Handle view contact info
-exports.view = function (req, res) {
+exports.details = function (req, res) {
     Contact.findById(req.params.contact_id, function (err, contact) {
         if (err)
             res.send(err);
-        res.json({
-            message: 'Contact details loading..',
-            data: contact
+        res.render('details', {
+          title: "Detalhes",
+          delete: false,
+          properties: Object.keys(Contact.schema.paths).map(key => {
+                            return {
+                              name: key,
+                              value: contact[key]
+                            }
+                  })
         });
     });
 };
@@ -123,7 +139,24 @@ contact.name = req.body.name ? req.body.name : contact.name;
         });
     });
 };
-
+//Handle delete confirmation
+exports.deletedetails = function (req, res) {
+  Contact.findById(req.params.contact_id, function (err, contact) {
+      if (err)
+          res.send(err);
+      res.render('details', {
+        title: "Eliminar",
+        delete: true,
+        deletelink: req.params.contact_id,
+        properties: Object.keys(Contact.schema.paths).map(key => {
+                          return {
+                            name: key,
+                            value: contact[key]
+                          }
+                })
+      });
+  });
+};
 // Handle delete contact
 exports.delete = function (req, res) {
     Contact.remove({
@@ -133,7 +166,7 @@ exports.delete = function (req, res) {
             res.send(err);
 
 res.json({
-            status: "success",
+            status: true,
             message: 'Contact deleted'
         });
     });
