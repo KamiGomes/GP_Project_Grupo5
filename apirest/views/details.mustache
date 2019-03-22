@@ -34,8 +34,8 @@
             <label>{{value}}</label>
         </div>
         {{/properties}}
+        <a href={{^delete}}"./"{{/delete}}{{#delete}}"../"{{/delete}}>Voltar</a>
         {{#delete}}
-              <a href="../">Voltar</a>
               <button type="button" onclick="deleteObj()">Eliminar</button>
         {{/delete}}
     </body>

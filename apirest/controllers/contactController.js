@@ -31,13 +31,13 @@ exports.index = function (req, res) {
                   }),
                   actions: [{
                     label: "Detalhes",
-                    link: "./contacts/"+obj._id
+                    link: "./"+obj._id
                     },{
                     label: "Editar",
-                    link: "./"
+                    link: "./update/"+obj._id
                     },{
                     label: "Eliminar",
-                    link: "./contacts/delete/"+obj._id
+                    link: "./delete/"+obj._id
                     }
                   ]}
               })
@@ -77,10 +77,6 @@ exports.create = function (req, res) {
 // Handle create contact actions
 exports.new = function (req, res) {
     var contact = new Contact();
-    console.log(req.body.name);
-    console.log(req.body.gender);
-    console.log(req.body.email);
-    console.log(req.body.phone);
     contact.name = req.body.name ? req.body.name : contact.name;
     contact.gender = req.body.gender;
     contact.email = req.body.email;
@@ -115,7 +111,34 @@ exports.details = function (req, res) {
         });
     });
 };
+//Handle update form
+exports.updateform = function (req, res) {
+    Contact.findById(req.params.contact_id, function (err, contact) {
+        if(err)
+          res.send(err);
 
+        res.render('form', {
+              title: "Contact",
+              formTitle: "Contact",
+              formAction: "Update",
+              formMethod: "POST",
+              update: true,
+              updatelink: req.params.contact_id,
+              properties: function () {
+                var properties = [];
+                Object.keys(Contact.schema.paths).map(key => {
+                  if(key != "create_date" && key != "_id" && key != "__v" ){
+                    var type = "text";
+                    if(key == "phone")
+                      type = typeof Contact.schema.tree.phone.default;
+                    properties.push({type: type, name: key, value: contact[key], nameLower: key, isDropDown: false});
+                  }
+                })
+                return properties;
+              }
+          });
+    });
+};
 // Handle update contact info
 exports.update = function (req, res) {
 

@@ -20,9 +20,13 @@ router.route('/contacts/insert')
   .get(contactController.create)
   .post(contactController.new);
 
-//Route to call the delete
+//Route to call the Delete Details
 router.route('/contacts/delete/:contact_id')
   .get(contactController.deletedetails);
+
+//Route to call the Update Form
+router.route('/contacts/update/:contact_id')
+  .get(contactController.updateform);
 
 //Route to call when Update,Deleting, Details
 router.route('/contacts/:contact_id')
