@@ -32,10 +32,10 @@ router.route('/contacts/update/:contact_id')
 
 //Route to call when Update,Deleting, Details
 router.route('/contacts/:contact_id')
-    .get(contactController.details)
-    .patch(contactController.update)
-    .put(contactController.update)
-    .delete(contactController.delete);
+  .get(contactController.details)
+  .patch(contactController.update)
+  .put(contactController.update)
+  .delete(contactController.delete);
 
 //Product routes
 router.route('/products')
@@ -45,6 +45,21 @@ router.route('/products')
 router.route('/products/insert')
   .get(productController.create)
   .post(productController.new);
+
+//Route to call the Delete Details
+router.route('/products/delete/:product_id')
+  .get(productController.deletedetails);
+
+//Route to call the Update Form
+router.route('/products/update/:product_id')
+  .get(productController.updateform);
+
+//route to call when Update,Deleting, details
+router.route('/products/:product_id')
+  .get(productController.details)
+  .patch(productController.update)
+  .put(productController.update)
+  .delete(productController.delete);
 
 // Export API routes
 module.exports = router;

@@ -2,8 +2,13 @@
     <head>
       <meta http-equiv="Content-type" content="text/html; charset=utf-8">
       <title>{{title}}</title>
-      {{#update}}
       <script type="text/javascript">
+        {{#created}}
+        function created(){
+          alert("{{message}}");
+        }
+        {{/created}}
+        {{#update}}
         function updateObj(){
             var formData = new FormData(document.forms[0]);
             var object = {};
@@ -14,16 +19,16 @@
             var request = new XMLHttpRequest();
             request.open("PUT", "../{{updatelink}}");
             request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            request.onload = function(){ alert (request.responseText); } // success case
+            request.onload = function(){ alert ("{{message}}"); } // success case
             request.onerror = function(){ alert (request.responseText); } // failure case
             request.send(json);
         }
+        {{/update}}
       </script>
-    {{/update}}
     </head>
     <header>
     </header>
-    <body>
+    <body {{#created}}onload="created()"{{/created}}>
         <h1>{{formAction}} {{formTitle}}</h1>
     <form method="{{formMethod}}">
       {{#properties}}
