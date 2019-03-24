@@ -1,0 +1,83 @@
+/*1920 - 1080 - Full HD*/
+header {
+  background-color: red;
+  height: 75px;
+}
+
+body {
+  background-color: lightblue;
+  position: relative;
+  margin: 0;
+}
+
+#logo {
+  background-color: seagreen;
+  min-width: 100px;
+  width: 10%;
+  height: 75px;
+  float: left;
+}
+
+#mainButtons {
+  background-color: orange;
+  min-width: 500px;
+  width: 70%;
+  height: 75px;
+  float: left;
+}
+
+#profile {
+  background-color: brown;
+  min-width: 200px;
+  width: 20%;
+  height: 75px;
+  float: left;
+}
+
+#mainContent {
+  background-color: mediumpurple;
+  float: left;
+  min-width: 1000px;
+  width: 100%;
+  height: 750px;
+}
+
+#contentleft {
+  background-color: skyblue;
+  min-width: 500px;
+  width: 50%;
+  height: 750px;
+  float:left;
+}
+
+#contentright {
+  background-color: royalblue;
+  min-width: 500px;
+  width: 50%;
+  height: 750px;
+  float:left;
+}
+
+#adminButtons {
+  background-color: skyblue;
+  min-width: 250px;
+  width: 25%;
+  height: 750px;
+  float:left;
+}
+
+#adminFunctions {
+  background-color: royalblue;
+  min-width: 750px;
+  width: 75%;
+  height: 750px;
+  float:left;
+}
+
+footer {
+  background-color: yellowgreen;
+  min-width: 1000px;
+  width: 100%;
+  height: 140px;
+  float: left;
+}
