@@ -3,6 +3,8 @@
 let router = require('express').Router();
 // Import contact controller
 var contactController = require('./controllers/contactController');
+//Import product controller
+var productController = require('./controllers/productController');
 // Set default API response
 router.get('/', function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
@@ -34,6 +36,15 @@ router.route('/contacts/:contact_id')
     .patch(contactController.update)
     .put(contactController.update)
     .delete(contactController.delete);
+
+//Product routes
+router.route('/products')
+  .get(productController.index);
+
+//Route to call the Form to create a new Product
+router.route('/products/insert')
+  .get(productController.create)
+  .post(productController.new);
 
 // Export API routes
 module.exports = router;
