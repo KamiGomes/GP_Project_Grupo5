@@ -21,5 +21,8 @@ module.exports = {
       "monthstock": "Stock Mensal",
       "animaltypeFK": "Tipo de Animal",
       "producttypeFK": "Tipo de Produto"
-    }
+    },
+  "createdProduct": "Produto criado com sucesso!",
+  "updatedProduct": "Produto atualizado com sucesso!",
+  "deletedProduct": "Produto eliminado com sucesso!"
 };

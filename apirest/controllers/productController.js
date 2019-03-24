@@ -3,6 +3,8 @@
 Product = require('../models/productModel');
 //Import language file
 var languagePack = require ('../language/portuguese');
+//Import render Functions
+var responses = require ('./resfunctions');
 //Get Parent path
 var path = require ('path');
 var parentPath = path.resolve(__dirname,'..');
@@ -18,37 +20,7 @@ exports.index = function (req, res){
                 message: err
             });
         }
-
-        res.render('listall', {
-              title: languagePack.titleProduct,
-              welcomeMessage: languagePack.list,
-              plus: languagePack.plusProduct,
-              columns: Object.keys(Product.schema.paths).map(key => {
-                        return {
-                            name: languagePack.propertiesProduct[key]
-                        }
-              }),
-              rows: products.map(obj => {
-                return {
-                  properties: Object.keys(Product.schema.paths).map(key => {
-                    return{
-                        value: obj[key]
-                    }
-                  }),
-                  actions: [{
-                    label: languagePack.labelDetails,
-                    link: "./products/"+obj._id
-                    },{
-                    label: languagePack.labelEdit,
-                    link: "./products/update/"+obj._id
-                    },{
-                    label: languagePack.labelDelete,
-                    link: "./products/delete/"+obj._id
-                    }
-                  ]}
-              })
-
-        });
+        res.render('listall', responses.listAll(languagePack.titleProduct,languagePack.list,languagePack.plusProduct,Product,products,languagePack.propertiesProduct,'products',languagePack.labelDetails,languagePack.labelEdit,languagePack.labelDelete));
     });
 };
 
@@ -62,24 +34,7 @@ exports.create = function (req, res) {
           });
         }
         //
-        res.render('form', {
-            title: languagePack.titleProduct,
-            formTitle: languagePack.insert,
-            formAction: languagePack.titleProduct,
-            formMethod: "POST",
-            properties: function () {
-              var properties = [];
-              Object.keys(Product.schema.paths).map(key => {
-                if(key != "create_date" && key != "_id" && key != "__v" ){
-                  var type = "text";
-                  if(key == "phone")
-                    type = typeof Contact.schema.tree.phone.default;
-                  properties.push({type: type, name: key, nameLower: key, isDropDown: false});
-                }
-              })
-              return properties;
-            }
-        });
+        res.render('form', responses.createForm(languagePack.propertiesProduct,Product,languagePack.titleProduct,languagePack.Insert,"POST"));
     });
 };
 
@@ -87,37 +42,17 @@ exports.create = function (req, res) {
 exports.new = function (req, res) {
     var product = new Product();
 
-    product.name = req.body.name;
-    product.quantity = req.body.quantity;
-    product.weekstock = req.body.weekstock;
-    product.monthstock = req.body.monthstock;
-    product.animaltypeFK = req.body.animaltypeFK;
-    product.producttypeFK = req.body.producttypeFK;
+    Object.keys(Product.schema.paths).map(key => {
+      if(key != "create_date" && key != "_id" && key != "__v" ){
+        product[key] = req.body[key];
+      }
+    });
 
 // save the Product and check for errors
     product.save(function (err) {
         // if (err)
         //     res.json(err);
-        res.render('form', {
-            title: languagePack.titleProduct,
-            formTitle: languagePack.insert,
-            formAction: languagePack.titleProduct,
-            created: true,
-            message: "Produto criado!",
-            formMethod: "POST",
-            properties: function () {
-              var properties = [];
-              Object.keys(Product.schema.paths).map(key => {
-                if(key != "create_date" && key != "_id" && key != "__v" ){
-                  var type = "text";
-                  if(key == "phone")
-                    type = typeof Contact.schema.tree.phone.default;
-                  properties.push({type: type, name: key, nameLower: key, isDropDown: false});
-                }
-              })
-              return properties;
-            }
-        });
+        res.render('form', res.render('form', responses.createForm(languagePack.propertiesProduct,Product,languagePack.titleProduct,languagePack.Insert,"POST", true, languagePack.createdProduct)));
     });
 };
 
@@ -126,17 +61,7 @@ exports.details = function (req, res) {
     Product.findById(req.params.product_id, function (err, product) {
         if (err)
             res.send(err);
-        res.render('details', {
-          title: languagePack.titleProduct,
-          delete: false,
-          updateLink: req.params.product_id,
-          properties: Object.keys(Product.schema.paths).map(key => {
-                            return {
-                              name: languagePack.propertiesProduct[key],
-                              value: product[key]
-                            }
-                  })
-        });
+        res.render('details', responses.detailList(languagePack.titleProduct,req.params.product_id,Product,languagePack.propertiesProduct,product));
     });
 };
 //Handle update form
@@ -145,25 +70,7 @@ exports.updateform = function (req, res) {
         if(err)
           res.send(err);
 
-        res.render('form', {
-              title: languagePack.titleProduct,
-              formTitle: languagePack.insert,
-              formAction: languagePack.titleProduct,
-              message: "Produto atualizado com sucesso!",
-              formMethod: "POST",
-              update: true,
-              updatelink: req.params.product_id,
-              properties: function () {
-                var properties = [];
-                Object.keys(Product.schema.paths).map(key => {
-                  if(key != "create_date" && key != "_id" && key != "__v" ){
-                    var type = "text";
-                    properties.push({type: type, name: key, value: product[key], nameLower: key, isDropDown: false});
-                  }
-                })
-                return properties;
-              }
-          });
+        res.render('form', responses.createForm(languagePack.propertiesProduct,Product,languagePack.titleProduct,languagePack.update,"POST",false, languagePack.updatedProduct, true, product));
     });
 };
 
@@ -174,12 +81,11 @@ exports.update = function (req, res) {
           if (err)
               res.send(err);
 
-          product.name = req.body.name;
-          product.quantity = req.body.quantity;
-          product.weekstock = req.body.weekstock;
-          product.monthstock = req.body.monthstock;
-          product.animaltypeFK = req.body.animaltypeFK;
-          product.producttypeFK = req.body.producttypeFK;
+          Object.keys(Product.schema.paths).map(key => {
+              if(key != "create_date" && key != "_id" && key != "__v" ){
+                  product[key] = req.body[key];
+              }
+          });
 
           // save the contact and check for errors
           product.save(function (err) {
@@ -199,17 +105,7 @@ exports.deletedetails = function (req, res) {
       if (err)
           res.send(err);
 
-      res.render('details', {
-        title: languagePack.titleProduct,
-        delete: true,
-        deletelink: req.params.product_id,
-        properties: Object.keys(Product.schema.paths).map(key => {
-                          return {
-                            name: key,
-                            value: product[key]
-                          }
-                })
-      });
+      res.render('details', responses.detailList(languagePack.titleProduct,req.params.product_id,Product,languagePack.propertiesProduct,product, true));
   });
 };
 
@@ -223,7 +119,7 @@ exports.delete = function (req, res) {
 
         res.json({
                     status: true,
-                    message: 'Product deleted'
+                    message: languagePack.deletedProduct
                 });
             });
 };

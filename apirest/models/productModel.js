@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 var productSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    default: ""
   },
   quantity: {
     type: Number,
@@ -29,7 +30,8 @@ var productSchema = mongoose.Schema({
   },
   producttypeFK: {
     type: Number,
-    required: true
+    required: true,
+    default: 0
   }
 });
 
