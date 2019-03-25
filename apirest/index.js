@@ -32,7 +32,8 @@ var port = process.env.PORT || 8080;
 
 // Send message for default URL
 app.get('/', (req, res) => res.sendFile( __dirname +'/wwwroot/index.html'));
-
+app.get('/contacs', (req, res) => res.sendFile( __dirname +'/wwwroot/contacs.html'));
+app.get('/administration', (req, res) => res.sendFile( __dirname +'/wwwroot/administration.html'));
 // Use Api routes in the App
 app.use('/administration', apiRoutes);
 

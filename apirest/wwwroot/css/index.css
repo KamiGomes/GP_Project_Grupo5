@@ -24,18 +24,19 @@ img {
 }
 
 #mainButtons {
-  min-width: 500px;
-  width: 70%;
+  min-width: 880px;
+  width: 90%;
   height: 75px;
-  float: left;
+  float: right;
 }
 
 #mainButtons a {
     color: white;
     text-decoration: none;
-    font-size: 40px;
-    text-align: center;
-    padding: 14px 16px;
+    font-size: 30px;
+    padding-right: 5px;
+    margin-right: 10px;
+    float: right;
 }
 
 #profile {
@@ -53,37 +54,41 @@ img {
     padding: 14px 16px;
 }
 
-#mainContent {
+.mainContent {
     background-color: mediumpurple;
     float: left;
     min-width: 1000px;
     width: 100%;
-    height: 750px;
-    overflow-y:scroll;
+    height: 887px;
+    /*overflow-y:scroll;*/
 }
 
 #slideContent {
     min-width: 1000px;
     position: relative;
-    margin: auto;
-    height: 750px;
+    margin: 0;
+    height: inherit;
 }
 
 .slides {
     min-width: 1000px;
     width: 100%;
-    height: 750px;
-
+    height: inherit;
+    position: relative;
 }
 
-#slideCaption {
+.slideCaption {
   color: #f2f2f2;
   font-size: 15px;
-  padding: 8px 12px;
+  /*padding: 8px 12px;*/
   position: absolute;
-  bottom: 8px;
+  bottom: 15px;
   width: 100%;
   text-align: center;
+}
+
+.slideCaption:hover {
+    background-color: rgba(0,0,0,0.8);
 }
 
 .previous, .next {
@@ -110,35 +115,55 @@ img {
   background-color: rgba(0,0,0,0.8);
 }
 
-#contentleft {
+.contentleft{
   background-color: skyblue;
   min-width: 500px;
   width: 50%;
-  height: 750px;
+  height: inherit;
   float:left;
+  overflow-y:auto;
 }
 
-#contentright {
+.contentright {
   background-color: royalblue;
   min-width: 500px;
   width: 50%;
-  height: 750px;
+  height: inherit;
   float:left;
+  overflow-y:auto;
 }
 
-#adminButtons {
+.adminButtons {
   background-color: skyblue;
   min-width: 250px;
   width: 25%;
-  height: 750px;
+  height: inherit;
   float:left;
+  overflow:auto;
 }
 
-#adminFunctions {
+.adminButtons a {
+  color: white;
+  display: block;
+  font-size: 30px;
+  padding: 30px;
+  text-decoration: none;
+}
+
+.adminButtons a:hover {
+  background-color: #ccc;
+}
+
+.adminButtons a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.adminFunctions {
   background-color: royalblue;
   min-width: 750px;
   width: 75%;
-  height: 750px;
+  height: inherit;
   float:left;
 }
 
@@ -146,6 +171,6 @@ footer {
   background-color: yellowgreen;
   min-width: 1000px;
   width: 100%;
-  height: 140px;
+  height: 25px;
   float: left;
 }
