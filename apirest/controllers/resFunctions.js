@@ -11,11 +11,12 @@ exports.listAll = function (titleUse,welcomeMessage,plusUse,SchemaClass,objects,
         }),
         rows: objects.map(obj => {
           return {
-            properties: Object.keys(SchemaClass.schema.paths).map(key => {
-              return{
-                  value: obj[key]
-              }
-            }),
+            properties: function (){
+              var properties = [];
+              Object.keys(SchemaClass.schema.paths).map(key => {
+                    properties.push({value: obj[key]});
+              });
+            },
             actions: [{
               label: labelDetails,
               link: "./"+link+"/"+obj._id

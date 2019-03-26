@@ -24,5 +24,15 @@ module.exports = {
     },
   "createdProduct": "Produto criado com sucesso!",
   "updatedProduct": "Produto atualizado com sucesso!",
-  "deletedProduct": "Produto eliminado com sucesso!"
+  "deletedProduct": "Produto eliminado com sucesso!",
+
+  /*ProductTYpe Section*/
+  "titleProductType": "Tipo de Produto",
+  "plustitleProductType": "Tipos de Produtos",
+  "propertiestitleProductType": {
+      "name": "Nome"
+    },
+  "createdProductType": "Tipo de Produto criado com sucesso!",
+  "updatedProductType": "Tipo de Produto atualizado com sucesso!",
+  "deletedProductType": "Tipo de Produto eliminado com sucesso!"
 };

@@ -29,9 +29,8 @@ var productSchema = mongoose.Schema({
     default: "Depois tem se alterar para Number e required True"
   },
   producttypeFK: {
-    type: Number,
-    required: true,
-    default: 0
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'producttype'
   }
 });
 

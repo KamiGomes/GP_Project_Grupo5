@@ -20,7 +20,9 @@ exports.index = function (req, res){
                 message: err
             });
         }
-        res.render('listall', responses.listAll(languagePack.titleProduct,languagePack.list,languagePack.plusProduct,Product,products,languagePack.propertiesProduct,'products',languagePack.labelDetails,languagePack.labelEdit,languagePack.labelDelete));
+        
+        res.render('listall', responses.listAll(languagePack.titleProduct,languagePack.list,languagePack.plusProduct,Product
+                      ,products,languagePack.propertiesProduct,'products',languagePack.labelDetails,languagePack.labelEdit,languagePack.labelDelete));
     });
 };
 
