@@ -23,12 +23,11 @@ var productSchema = mongoose.Schema({
     required: false,
     default: 0
   },
-  animaltypeFK: {
-    type: String,
-    required: false,
-    default: "Depois tem se alterar para Number e required True"
+  animaltypesFK: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'animaltype'
   },
-  producttypeFK: {
+  producttypesFK: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'producttype'
   }

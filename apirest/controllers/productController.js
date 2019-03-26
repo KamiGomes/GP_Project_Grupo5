@@ -1,6 +1,7 @@
 //productController.js
 //Import product model
 Product = require('../models/productModel');
+ProductType = require('../models/producttypeModel');
 //Import language file
 var languagePack = require ('../language/portuguese');
 //Import render Functions
@@ -20,7 +21,7 @@ exports.index = function (req, res){
                 message: err
             });
         }
-        
+
         res.render('listall', responses.listAll(languagePack.titleProduct,languagePack.list,languagePack.plusProduct,Product
                       ,products,languagePack.propertiesProduct,'products',languagePack.labelDetails,languagePack.labelEdit,languagePack.labelDelete));
     });
@@ -54,7 +55,8 @@ exports.new = function (req, res) {
     product.save(function (err) {
         // if (err)
         //     res.json(err);
-        res.render('form', res.render('form', responses.createForm(languagePack.propertiesProduct,Product,languagePack.titleProduct,languagePack.Insert,"POST", true, languagePack.createdProduct)));
+        res.render('form', res.render('form', responses.createForm(languagePack.propertiesProduct,Product,
+                      languagePack.titleProduct,languagePack.Insert,"POST", true, languagePack.createdProduct)));
     });
 };
 
@@ -72,7 +74,8 @@ exports.updateform = function (req, res) {
         if(err)
           res.send(err);
 
-        res.render('form', responses.createForm(languagePack.propertiesProduct,Product,languagePack.titleProduct,languagePack.update,"POST",false, languagePack.updatedProduct, true, product));
+        res.render('form', responses.createForm(languagePack.propertiesProduct,Product,languagePack.titleProduct,
+                      languagePack.update,"POST",false, languagePack.updatedProduct, true, product, req.params.product_id));
     });
 };
 

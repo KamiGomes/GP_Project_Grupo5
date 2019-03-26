@@ -1,4 +1,7 @@
-
+//Functions for templates
+var getRequires = require('../data/requires');
+var valueDrops = [];
+//****************
 exports.listAll = function (titleUse,welcomeMessage,plusUse,SchemaClass,objects,propertiesUse,link,labelDetails,labelEdit,labelDelete) {
   return {
         title: titleUse,
@@ -14,8 +17,11 @@ exports.listAll = function (titleUse,welcomeMessage,plusUse,SchemaClass,objects,
             properties: function (){
               var properties = [];
               Object.keys(SchemaClass.schema.paths).map(key => {
-                    properties.push({value: obj[key]});
+                  if(key != "_id" && key != "__v") {
+                      properties.push({value: obj[key]});
+                  }
               });
+              return properties;
             },
             actions: [{
               label: labelDetails,
@@ -29,12 +35,11 @@ exports.listAll = function (titleUse,welcomeMessage,plusUse,SchemaClass,objects,
               }
             ]}
         })
-
   }
 };
 
-exports.createForm = function (propertiesUse,SchemaClass,titleUse,formTitle,method,created = false, message = "", update = false, object = null){
-  var toReturn = {}
+exports.createForm = function (propertiesUse,SchemaClass,titleUse,formTitle,method,created = false, message = "", update = false, object = null,updateLink = null){
+  var fkeys = [];
 
   return {
       title: titleUse,
@@ -42,6 +47,7 @@ exports.createForm = function (propertiesUse,SchemaClass,titleUse,formTitle,meth
       formAction: titleUse,
       created: created,
       update: update,
+      updatelink: updateLink,
       message: message,
       formMethod: method,
       properties: function () {
@@ -49,14 +55,32 @@ exports.createForm = function (propertiesUse,SchemaClass,titleUse,formTitle,meth
         Object.keys(SchemaClass.schema.paths).map(key => {
           if(key != "_id" && key != "__v" ){
             if(object == null) {
-              properties.push({type: SchemaClass.schema.paths[key].instance, name: propertiesUse[key], nameLower: key, isDropDown: false});
+              if(SchemaClass.schema.paths[key].instance != "ObjectID"){
+                properties.push({type: SchemaClass.schema.paths[key].instance, name: propertiesUse[key],
+                                  nameLower: key, isDropDown: false});
+              } else {
+                properties.push({name: propertiesUse[key], isDropdown: true, valueDrops: valueDrops, namefk: SchemaClass.schema.paths[key].path.split('FK')[0]});
+              }
             }
             else {
-              properties.push({type: SchemaClass.schema.paths[key].instance, name: propertiesUse[key], value: object[key],nameLower: key, isDropDown: false});
+              properties.push({type: SchemaClass.schema.paths[key].instance, name: propertiesUse[key],
+                                  value: object[key],nameLower: key, isDropDown: false});
             }
           }
         })
         return properties;
+      },
+      fkeys: function() {
+        var fkeys = [];
+        Object.keys(SchemaClass.schema.paths).map(key => {
+          if(key != "_id" && key != "__v" ){
+            if(object == null) {
+              if(SchemaClass.schema.paths[key].instance == "ObjectID"){
+                fkeys.push( { namefk: SchemaClass.schema.paths[key].path.split('FK')[0]});
+              }
+          }
+        }});
+        return fkeys;
       }
   }
 };

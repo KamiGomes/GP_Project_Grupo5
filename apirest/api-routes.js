@@ -7,6 +7,8 @@ var contactController = require('./controllers/contactController');
 var productController = require('./controllers/productController');
 //Import product controller
 var producttypeController = require('./controllers/producttypeController');
+//Import product controller
+var animaltypeController = require('./controllers/animaltypeController');
 // Set default API response
 router.get('/', function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
@@ -67,6 +69,9 @@ router.route('/products/:product_id')
 router.route('/producttypes')
   .get(producttypeController.index);
 
+router.route('/producttypes/dropdrown')
+  .get(producttypeController.dropdrown);
+
 //Route to call the Form to create a new Product
 router.route('/producttypes/insert')
   .get(producttypeController.create)
@@ -86,5 +91,32 @@ router.route('/producttypes/:producttype_id')
   .patch(producttypeController.update)
   .put(producttypeController.update)
   .delete(producttypeController.delete);
+
+//Animaltype
+router.route('/animaltypes')
+  .get(animaltypeController.index);
+
+router.route('/animaltypes/dropdrown')
+  .get(animaltypeController.dropdrown);
+
+//Route to call the Form to create a new Product
+router.route('/animaltypes/insert')
+  .get(animaltypeController.create)
+  .post(animaltypeController.new);
+
+//Route to call the Delete Details
+router.route('/animaltypes/delete/:animaltypes_id')
+  .get(animaltypeController.deletedetails);
+
+//Route to call the Update Form
+router.route('/animaltypes/update/:animaltypes_id')
+  .get(animaltypeController.updateform);
+
+//route to call when Update,Deleting, details
+router.route('/animaltypes/:animaltypes_id')
+  .get(animaltypeController.details)
+  .patch(animaltypeController.update)
+  .put(animaltypeController.update)
+  .delete(animaltypeController.delete);
 // Export API routes
 module.exports = router;

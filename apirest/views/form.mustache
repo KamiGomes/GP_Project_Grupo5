@@ -8,6 +8,35 @@
           alert("{{message}}");
         }
         {{/created}}
+        function callFunctions() {
+          {{#fkeys}}
+          {{namefk}}List();
+          {{/fkeys}}
+          {{#created}}
+          created();
+          {{/created}}
+        }
+        {{#fkeys}}
+        function {{namefk}}List(){
+          var request = new XMLHttpRequest();
+          request.open("GET", "../{{namefk}}/dropdrown");
+          request.onload = function(){
+            console.log(request.responseText);
+              var obj = JSON.parse(request.responseText);
+              console.log(obj);
+              var select = document.getElementById("{{namefk}}");
+              for(var element in obj) {
+                console.log(element);
+                  var option = document.createElement("option");
+                  option.text = obj[element].name;
+                  option.value = obj[element]._id;
+                  select.appendChild(option);
+                  console.log(element._id);
+              };
+          }
+          request.send();
+        }
+        {{/fkeys}}
         {{#update}}
         function updateObj(){
             var formData = new FormData(document.forms[0]);
@@ -28,7 +57,7 @@
     </head>
     <header>
     </header>
-    <body {{#created}}onload="created()"{{/created}}>
+    <body onload="callFunctions()">
         <h1>{{formAction}} {{formTitle}}</h1>
     <form method="{{formMethod}}">
       {{#properties}}
@@ -36,6 +65,11 @@
           <label >{{name}}:</label>
           {{^isDropdown}}
           <input type="{{type}}" value="{{value}}" name="{{nameLower}}" {{#required}}required {{/required}}/>
+          {{/isDropdown}}
+          {{#isDropdown}}
+          <select id={{namefk}}>
+            <option value="0">Por favor seleccione um</option>
+          </select>
           {{/isDropdown}}
       </div>
       {{/properties}}

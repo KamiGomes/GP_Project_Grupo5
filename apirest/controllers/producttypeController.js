@@ -22,9 +22,22 @@ exports.index = function (req, res){
         }
 
         res.render('listall', responses.listAll(languagePack.titleProductType,languagePack.list,
-                      languagePack.plusProductType,ProductType,producttypes,languagePack.propertiesProductType,
+                      languagePack.plustitleProductType,ProductType,producttypes,languagePack.propertiesProductType,
                       'producttypes',languagePack.labelDetails,languagePack.labelEdit,languagePack.labelDelete));
     });
+};
+
+exports.dropdrown = function (req,res){
+  ProductType.get(function (err, producttypes) {
+      if (err){
+          res.json({
+              status: "error",
+              message: err
+          });
+      }
+
+      res.json(producttypes);
+  });
 };
 
 //Get Insert Form
@@ -63,7 +76,7 @@ exports.new = function (req, res) {
 
 // Handle view Product info
 exports.details = function (req, res) {
-    ProductType.findById(req.params.product_id, function (err, producttype) {
+    ProductType.findById(req.params.producttype_id, function (err, producttype) {
         if (err)
             res.send(err);
         res.render('details', responses.detailList(languagePack.titleProductType,req.params.product_id,ProductType,
@@ -72,19 +85,19 @@ exports.details = function (req, res) {
 };
 //Handle update form
 exports.updateform = function (req, res) {
-    ProductType.findById(req.params.product_id, function (err, producttype) {
+    ProductType.findById(req.params.producttype_id, function (err, producttype) {
         if(err)
           res.send(err);
 
         res.render('form', responses.createForm(languagePack.propertiesProductType,ProductType,languagePack.titleProductType,
-                      languagePack.update,"POST",false, languagePack.updatedProductType, true, producttype));
+                      languagePack.update,"POST",false, languagePack.updatedProductType, true, producttype,req.params.producttype_id));
     });
 };
 
 // Handle update contact info
 exports.update = function (req, res) {
 
-    ProductType.findById(req.params.product_id, function (err, producttype) {
+    ProductType.findById(req.params.producttype_id, function (err, producttype) {
           if (err)
               res.send(err);
 
@@ -108,11 +121,11 @@ exports.update = function (req, res) {
 
 //Handle delete confirmation
 exports.deletedetails = function (req, res) {
-  ProductType.findById(req.params.product_id, function (err, producttype) {
+  ProductType.findById(req.params.producttype_id, function (err, producttype) {
       if (err)
           res.send(err);
 
-      res.render('details', responses.detailList(languagePack.titleProductType,req.params.product_id,ProductType,
+      res.render('details', responses.detailList(languagePack.titleProductType,req.params.producttype_id,ProductType,
                     languagePack.propertiesProductType,producttype, true));
   });
 };
@@ -120,7 +133,7 @@ exports.deletedetails = function (req, res) {
 // Handle delete contact
 exports.delete = function (req, res) {
     ProductType.remove({
-        _id: req.params.product_id
+        _id: req.params.producttype_id
     }, function (err, producttype) {
         if (err)
             res.send(err);
