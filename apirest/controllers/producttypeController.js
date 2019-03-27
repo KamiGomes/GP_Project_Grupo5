@@ -51,7 +51,7 @@ exports.create = function (req, res) {
         }
         //
         res.render('form', responses.createForm(languagePack.propertiesProductType,ProductType,
-                      languagePack.titleProductType,languagePack.Insert,"POST"));
+                      languagePack.titleProductType,languagePack.Insert,"POST","producttypes",true,languagePack.createdProductType));
     });
 };
 
@@ -67,10 +67,12 @@ exports.new = function (req, res) {
 
 // save the Product and check for errors
     producttype.save(function (err) {
-        // if (err)
-        //     res.json(err);
-        res.render('form', res.render('form', responses.createForm(languagePack.propertiesProductType,ProductType,
-                      languagePack.titleProductType,languagePack.Insert,"POST", true, languagePack.createdProductType)));
+         if (err)
+           res.json(err);
+           res.json({
+                       status: true,
+                       message: languagePack.createdProductType
+                   });
     });
 };
 
@@ -90,7 +92,7 @@ exports.updateform = function (req, res) {
           res.send(err);
 
         res.render('form', responses.createForm(languagePack.propertiesProductType,ProductType,languagePack.titleProductType,
-                      languagePack.update,"POST",false, languagePack.updatedProductType, true, producttype,req.params.producttype_id));
+                      languagePack.update,"POST","",false, languagePack.updatedProductType, true, producttype,req.params.producttype_id));
     });
 };
 

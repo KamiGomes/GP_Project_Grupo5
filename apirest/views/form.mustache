@@ -4,17 +4,32 @@
       <title>{{title}}</title>
       <script type="text/javascript">
         {{#created}}
-        function created(){
-          alert("{{message}}");
+        function createObj(){
+            var formData = new FormData(document.forms[0]);
+            var object = {};
+                formData.forEach(function(value, key){
+                    object[key] = value;
+                });
+            var json = JSON.stringify(object);
+            var request = new XMLHttpRequest();
+            request.open("POST", "../{{insertlink}}/insert");
+            request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            request.onreadystatechange = function () {
+                if(request.readyState === 4 && request.status === 200) {
+                    var response = JSON.parse(this.responseText)
+                    if(response.status){
+                        alert(response.message);
+                        window.location.replace("./");
+                    }
+                }
+            }
+            request.send(json);
         }
         {{/created}}
         function callFunctions() {
           {{#fkeys}}
           {{namefk}}List();
           {{/fkeys}}
-          {{#created}}
-          created();
-          {{/created}}
         }
         {{#fkeys}}
         function {{namefk}}List(){
@@ -48,7 +63,11 @@
             var request = new XMLHttpRequest();
             request.open("PUT", "../{{updatelink}}");
             request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            request.onload = function(){ alert ("{{message}}"); } // success case
+            request.onload = function(){
+                              var response = JSON.parse(this.responseText);
+                              alert(response.message);
+                              window.location.replace("../");
+                            } // success case
             request.onerror = function(){ alert (request.responseText); } // failure case
             request.send(json);
         }
@@ -57,7 +76,7 @@
     </head>
     <header>
     </header>
-    <body onload="callFunctions()">
+    <body>
         <h1>{{formAction}} {{formTitle}}</h1>
     <form method="{{formMethod}}">
       {{#properties}}
@@ -67,17 +86,17 @@
           <input type="{{type}}" value="{{value}}" name="{{nameLower}}" {{#required}}required {{/required}}/>
           {{/isDropdown}}
           {{#isDropdown}}
-          <select id={{namefk}}>
+          <select name={{namefk}} id={{namefk}}>
             <option value="0">Por favor seleccione um</option>
           </select>
           {{/isDropdown}}
       </div>
       {{/properties}}
+    </form>
         {{^update}}
         <a href="./">Voltar</a>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Guardar" onClick="createObj()">
         {{/update}}
-    </form>
         {{#update}}
         <a href="../">Voltar</a>
         <input type="submit" value="Editar" onClick="updateObj()">

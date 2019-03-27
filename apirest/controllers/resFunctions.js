@@ -38,14 +38,13 @@ exports.listAll = function (titleUse,welcomeMessage,plusUse,SchemaClass,objects,
   }
 };
 
-exports.createForm = function (propertiesUse,SchemaClass,titleUse,formTitle,method,created = false, message = "", update = false, object = null,updateLink = null){
-  var fkeys = [];
-
+exports.createForm = function (propertiesUse,SchemaClass,titleUse,formTitle,method,insertlink = "",created = false, message = "", update = false, object = null,updateLink = null){
   return {
       title: titleUse,
       formTitle: formTitle,
       formAction: titleUse,
       created: created,
+      insertlink: insertlink,
       update: update,
       updatelink: updateLink,
       message: message,

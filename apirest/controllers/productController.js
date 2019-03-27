@@ -47,14 +47,16 @@ exports.new = function (req, res) {
 
     Object.keys(Product.schema.paths).map(key => {
       if(key != "create_date" && key != "_id" && key != "__v" ){
-        product[key] = req.body[key];
+          if(key != "animaltypesFK" && key != "producttypesFKv")
+              product[key] = req.body[key];
       }
     });
 
 // save the Product and check for errors
     product.save(function (err) {
-        // if (err)
-        //     res.json(err);
+        if (err)
+             res.json(err);
+
         res.render('form', res.render('form', responses.createForm(languagePack.propertiesProduct,Product,
                       languagePack.titleProduct,languagePack.Insert,"POST", true, languagePack.createdProduct)));
     });
