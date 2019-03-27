@@ -21,9 +21,26 @@ exports.index = function (req, res){
                 message: err
             });
         }
+        AnimalType.get(function (err, animaltypes){
+            if (err){
+                res.json({
+                    status: "error",
+                    message: err
+                });
+          }
+          ProductType.get(function (err, producttypes) {
+              if (err){
+                  res.json({
+                      status: "error",
+                      message: err
+                  });
+              }
+              var fkeys = {animaltypes: animaltypes, producttypes: producttypes};
+              res.render('listall', responses.listAll(languagePack.titleProduct,languagePack.list,languagePack.plusProduct,Product
+                            ,products,languagePack.propertiesProduct,'products',languagePack.labelDetails,languagePack.labelEdit,languagePack.labelDelete, fkeys));
+          });
+        });
 
-        res.render('listall', responses.listAll(languagePack.titleProduct,languagePack.list,languagePack.plusProduct,Product
-                      ,products,languagePack.propertiesProduct,'products',languagePack.labelDetails,languagePack.labelEdit,languagePack.labelDelete));
     });
 };
 

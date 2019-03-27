@@ -2,7 +2,7 @@
 var getRequires = require('../data/requires');
 var valueDrops = [];
 //****************
-exports.listAll = function (titleUse,welcomeMessage,plusUse,SchemaClass,objects,propertiesUse,link,labelDetails,labelEdit,labelDelete) {
+exports.listAll = function (titleUse,welcomeMessage,plusUse,SchemaClass,objects,propertiesUse,link,labelDetails,labelEdit,labelDelete,fkeys = null) {
   return {
         title: titleUse,
         welcomeMessage: welcomeMessage,
@@ -18,7 +18,15 @@ exports.listAll = function (titleUse,welcomeMessage,plusUse,SchemaClass,objects,
               var properties = [];
               Object.keys(SchemaClass.schema.paths).map(key => {
                   if(key != "_id" && key != "__v") {
-                      properties.push({value: obj[key]});
+                      if(SchemaClass.schema.paths[key].instance == "Array"){
+                        for (var i = 0; i < fkeys[key].length; i++){
+                          if (fkeys[key][i]._id.toString() === obj[key].toString()){
+                            properties.push({value: fkeys[key][i].name});
+                          }
+                        }
+                      } else {
+                          properties.push({value: obj[key]});
+                      }
                   }
               });
               return properties;
