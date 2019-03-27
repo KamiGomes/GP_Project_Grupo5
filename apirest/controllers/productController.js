@@ -37,7 +37,8 @@ exports.create = function (req, res) {
           });
         }
         //
-        res.render('form', responses.createForm(languagePack.propertiesProduct,Product,languagePack.titleProduct,languagePack.Insert,"POST"));
+        res.render('form', responses.createForm(languagePack.propertiesProduct,Product,
+                      languagePack.titleProduct,languagePack.Insert,"POST","products",true,languagePack.createdProduct));
     });
 };
 
@@ -47,8 +48,13 @@ exports.new = function (req, res) {
 
     Object.keys(Product.schema.paths).map(key => {
       if(key != "create_date" && key != "_id" && key != "__v" ){
-          if(key != "animaltypesFK" && key != "producttypesFKv")
+          if(Product.schema.paths[key].instance != "Array"){
               product[key] = req.body[key];
+          }
+          else{
+              console.log(key +" | " + req.body[key]);
+              product[key].push(req.body[key]);
+          }
       }
     });
 
@@ -57,8 +63,10 @@ exports.new = function (req, res) {
         if (err)
              res.json(err);
 
-        res.render('form', res.render('form', responses.createForm(languagePack.propertiesProduct,Product,
-                      languagePack.titleProduct,languagePack.Insert,"POST", true, languagePack.createdProduct)));
+             res.json({
+                         status: true,
+                         message: languagePack.createdProductType
+                     });
     });
 };
 

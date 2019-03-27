@@ -23,14 +23,14 @@ var productSchema = mongoose.Schema({
     required: false,
     default: 0
   },
-  animaltypesFK: {
+  animaltypes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'animaltype'
-  },
-  producttypesFK: {
+  }],
+  producttypes: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'producttype'
-  }
+  }]
 });
 
 var Product = module.exports = mongoose.model('product', productSchema);

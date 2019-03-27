@@ -54,11 +54,11 @@ exports.createForm = function (propertiesUse,SchemaClass,titleUse,formTitle,meth
         Object.keys(SchemaClass.schema.paths).map(key => {
           if(key != "_id" && key != "__v" ){
             if(object == null) {
-              if(SchemaClass.schema.paths[key].instance != "ObjectID"){
+              if(SchemaClass.schema.paths[key].instance != "Array"){
                 properties.push({type: SchemaClass.schema.paths[key].instance, name: propertiesUse[key],
                                   nameLower: key, isDropDown: false});
               } else {
-                properties.push({name: propertiesUse[key], isDropdown: true, valueDrops: valueDrops, namefk: SchemaClass.schema.paths[key].path.split('FK')[0]});
+                properties.push({name: propertiesUse[key], isDropdown: true, valueDrops: valueDrops, namefk: key});
               }
             }
             else {
@@ -74,7 +74,7 @@ exports.createForm = function (propertiesUse,SchemaClass,titleUse,formTitle,meth
         Object.keys(SchemaClass.schema.paths).map(key => {
           if(key != "_id" && key != "__v" ){
             if(object == null) {
-              if(SchemaClass.schema.paths[key].instance == "ObjectID"){
+              if(SchemaClass.schema.paths[key].instance == "Array"){
                 fkeys.push( { namefk: SchemaClass.schema.paths[key].path.split('FK')[0]});
               }
           }
