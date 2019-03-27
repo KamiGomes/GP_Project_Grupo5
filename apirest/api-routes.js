@@ -17,6 +17,13 @@ router.get('/', function (req, res) {
        message: 'Hello World with Express and Nodemon',
     });*/
 });
+router.get('/Teste', function (req, res) {
+    res.json({message: "ola"});
+    /*res.json({
+       status: 'API Its Working',
+       message: 'Hello World with Express and Nodemon',
+    });*/
+});
 // Contact routes
 router.route('/contacts')
     .get(contactController.index);

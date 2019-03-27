@@ -51,7 +51,7 @@ exports.create = function (req, res) {
         }
         //
         res.render('form', responses.createForm(languagePack.propertiesAnimalType,AnimalType,
-                      languagePack.titleAnimalType,languagePack.Insert,"POST"));
+                      languagePack.titleAnimalType,languagePack.Insert,"POST","animaltypes",true,languagePack.createdAnimalType));
     });
 };
 
@@ -67,10 +67,12 @@ exports.new = function (req, res) {
 
 // save the Product and check for errors
     animaltype.save(function (err) {
-        // if (err)
-        //     res.json(err);
-        res.render('form', res.render('form', responses.createForm(languagePack.propertiesAnimalType,AnimalType,
-                      languagePack.titleAnimalType,languagePack.Insert,"POST", true, languagePack.createdAnimalType)));
+        if (err)
+             res.json(err);
+        res.json({
+                  status: true,
+                  message: languagePack.createdProductType
+                });
     });
 };
 
@@ -83,6 +85,7 @@ exports.details = function (req, res) {
                       languagePack.propertiesAnimalType,animaltype));
     });
 };
+
 //Handle update form
 exports.updateform = function (req, res) {
     AnimalType.findById(req.params.animaltype_id, function (err, animaltype) {
@@ -90,7 +93,7 @@ exports.updateform = function (req, res) {
           res.send(err);
 
         res.render('form', responses.createForm(languagePack.propertiesAnimalType,AnimalType,languagePack.titleAnimalType,
-                      languagePack.update,"POST",false, languagePack.updatedAnimalType, true, animaltype,req.params.animaltype_id));
+                      languagePack.update,"POST","",false, languagePack.updatedAnimalType, true, animaltype,req.params.animaltype_id));
     });
 };
 

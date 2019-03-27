@@ -85,6 +85,7 @@ exports.details = function (req, res) {
                       languagePack.propertiesProductType,producttype));
     });
 };
+
 //Handle update form
 exports.updateform = function (req, res) {
     ProductType.findById(req.params.producttype_id, function (err, producttype) {
@@ -114,8 +115,8 @@ exports.update = function (req, res) {
               if (err)
                 res.json(err);
               res.json({
-                  message: 'Product Info updated',
-                  data: producttype
+                  status: true,
+                  message: languagePack.updatedProductType
                 });
               });
     });
