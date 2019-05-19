@@ -24,7 +24,7 @@ app.set('views', __dirname + '/views'); // you can change '/views' to '/public',
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 // Connect to Mongoose and set connection variable
-mongoose.connect('mongodb://localhost/resthub');
+mongoose.connect('mongodb://localhost/resthub', { useNewUrlParser: true });
 
 var db = mongoose.connection;
 // Setup server port
