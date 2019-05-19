@@ -38,3 +38,5 @@ var Product = module.exports = mongoose.model('product', productSchema);
 module.exports.get = function (callback, limit) {
     Product.find(callback).limit(limit);
 }
+
+ 

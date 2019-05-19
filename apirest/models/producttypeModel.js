@@ -1,6 +1,7 @@
 //productMode.js
 var mongoose = require('mongoose');
 
+
 //schema
 var producttypeSchema = mongoose.Schema({
   name: {

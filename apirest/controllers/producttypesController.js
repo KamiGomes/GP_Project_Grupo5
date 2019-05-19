@@ -76,6 +76,14 @@ exports.new = function (req, res) {
     });
 };
 
+exports.test = function (req, res){
+  ProductType.getById(req.params.producttype_id, function (err, producttype) {
+      if (err)
+          res.send(err);
+      res.json(producttype);
+  });
+}
+
 // Handle view Product info
 exports.details = function (req, res) {
     ProductType.findById(req.params.producttype_id, function (err, producttype) {
