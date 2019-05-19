@@ -12,6 +12,7 @@
     "express": "^4.16.4",
     "forms-mongoose": "0.0.6",
     "mustache": "^3.0.1",
-    "mustache-express": "^1.2.8"
+    "mustache-express": "^1.2.8",
+    "nodemon": "^1.18.10"
   }
 }

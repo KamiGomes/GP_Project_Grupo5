@@ -2,7 +2,7 @@
 // Import contact model
 Contact = require('../models/contactModel');
 // Get Parent Path
-var path = require("path");
+var path = require('path');
 var parentPath = path.resolve(__dirname,'..');
 // Handle index actions
 exports.index = function (req, res) {

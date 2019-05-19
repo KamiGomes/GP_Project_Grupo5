@@ -1,5 +1,4 @@
 // contactModel.js
-
 var mongoose = require('mongoose');
 
 // Setup schema
