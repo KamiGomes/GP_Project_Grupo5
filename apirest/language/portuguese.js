@@ -19,10 +19,31 @@ module.exports = {
       "quantity": "Quantidade",
       "weekstock": "Stock Semanal",
       "monthstock": "Stock Mensal",
-      "animaltypeFK": "Tipo de Animal",
-      "producttypeFK": "Tipo de Produto"
+      "animaltypes": "Tipo de Animal",
+      "producttypes": "Tipo de Produto"
     },
   "createdProduct": "Produto criado com sucesso!",
   "updatedProduct": "Produto atualizado com sucesso!",
-  "deletedProduct": "Produto eliminado com sucesso!"
+  "deletedProduct": "Produto eliminado com sucesso!",
+
+  /*ProductTYpe Section*/
+  "titleProductType": "Tipo de Produto",
+  "plustitleProductType": "Tipos de Produtos",
+  "propertiesProductType": {
+      "name": "Nome"
+    },
+  "createdProductType": "Tipo de Produto criado com sucesso!",
+  "updatedProductType": "Tipo de Produto atualizado com sucesso!",
+  "deletedProductType": "Tipo de Produto eliminado com sucesso!",
+
+  /*AnimalType Section*/
+  /*ProductTYpe Section*/
+  "titleAnimalType": "Tipo de Animal",
+  "plustitleAnimalType": "Tipos de Animais",
+  "propertiesAnimalType": {
+      "name": "Nome"
+    },
+  "createdAnimalType": "Tipo de Animal criado com sucesso!",
+  "updatedAnimalType": "Tipo de Animal atualizado com sucesso!",
+  "deletedAnimalType": "Tipo de Animal eliminado com sucesso!"
 };

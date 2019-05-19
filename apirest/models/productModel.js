@@ -23,16 +23,14 @@ var productSchema = mongoose.Schema({
     required: false,
     default: 0
   },
-  animaltypeFK: {
-    type: String,
-    required: false,
-    default: "Depois tem se alterar para Number e required True"
-  },
-  producttypeFK: {
-    type: Number,
-    required: true,
-    default: 0
-  }
+  animaltypes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'animaltype'
+  }],
+  producttypes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'producttype'
+  }]
 });
 
 var Product = module.exports = mongoose.model('product', productSchema);
@@ -40,3 +38,5 @@ var Product = module.exports = mongoose.model('product', productSchema);
 module.exports.get = function (callback, limit) {
     Product.find(callback).limit(limit);
 }
+
+ 
