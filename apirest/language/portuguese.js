@@ -19,8 +19,8 @@ module.exports = {
       "quantity": "Quantidade",
       "weekstock": "Stock Semanal",
       "monthstock": "Stock Mensal",
-      "animaltypes": "Tipo de Animal",
-      "producttypes": "Tipo de Produto"
+      "animaltypesFK": "Tipo de Animal",
+      "producttypesFK": "Tipo de Produto"
     },
   "createdProduct": "Produto criado com sucesso!",
   "updatedProduct": "Produto atualizado com sucesso!",

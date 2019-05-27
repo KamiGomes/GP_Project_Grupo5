@@ -4,11 +4,11 @@ let router = require('express').Router();
 // Import contact controller
 var contactController = require('./controllers/contactController');
 //Import product controller
-var productController = require('./controllers/productController');
+var productController = require('./controllers/productsController');
 //Import product controller
-var producttypeController = require('./controllers/producttypeController');
+var producttypeController = require('./controllers/producttypesController');
 //Import product controller
-var animaltypeController = require('./controllers/animaltypeController');
+var animaltypeController = require('./controllers/animaltypesController');
 // Set default API response
 router.get('/', function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
