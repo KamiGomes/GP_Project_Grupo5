@@ -14,6 +14,7 @@ let app = express();
 let apiRoutes = require("./api-routes")
 
 // Configure bodyparser to handle post requests
+app.use(express.static('wwwroot'));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -30,8 +31,9 @@ var db = mongoose.connection;
 var port = process.env.PORT || 8080;
 
 // Send message for default URL
-app.get('/', (req, res) => res.send('Hello World with Express'));
-
+app.get('/', (req, res) => res.sendFile( __dirname +'/wwwroot/index.html'));
+app.get('/contacs', (req, res) => res.sendFile( __dirname +'/wwwroot/contacs.html'));
+app.get('/administration', (req, res) => res.sendFile( __dirname +'/wwwroot/administration.html'));
 // Use Api routes in the App
 app.use('/administration', apiRoutes);
 
